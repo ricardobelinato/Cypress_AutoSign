@@ -14,7 +14,7 @@ function gerarNome2(nomeAleatorio, sobrenomeAleatorio) {
 
 //Gera o email
 function gerarEmail(nomeAleatorio, sobrenomeAleatorio) {
-    const emailAleatorio = nomeAleatorio.toLowerCase() + sobrenomeAleatorio.toLowerCase() + 'testerubeus@rubeusteste.com.br';
+    const emailAleatorio = nomeAleatorio.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toLowerCase() + sobrenomeAleatorio.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toLowerCase() + 'testerubeus@rubeusteste.com.br';
     return emailAleatorio;
 }
 

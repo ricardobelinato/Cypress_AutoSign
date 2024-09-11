@@ -32,21 +32,57 @@ describe('Varredura de campos', () => {
                 cy.wrap($div).find('input[type="text"]').type(dataNascimentoMaior);
                 numCamposPreenchidos += 1;
             }
+        }).then(() => {
+            if (numCamposPreenchidos == 0) {
+                cy.document().then((doc) => {
+                    const labels = [
+                        { text: 'Nome completo *', value: nomeCompleto },
+                        { text: 'E-mail *', value: emailAleatorio },
+                        { text: 'Celular *', value: telefoneAleatorio },
+                        { text: 'CPF *', value: cpfAleatorio },
+                        { text: 'Data de Nascimento *', value: dataNascimentoMaior }
+                    ];
+
+                    labels.forEach(labelObj => {
+                        const label = Array.from(doc.querySelectorAll('label')).find(el => el.textContent.includes(labelObj.text));
+                        if (label) {
+                            cy.wrap(label).parent().find('input').type(labelObj.value);
+                        } else {
+                            cy.log(`O label "${labelObj.text}" não existe no DOM`);
+                        }
+                    });
+                });
+            }
         });
+            
+        
 
-        // if (numCamposPreenchidos == 0){
-        //     cy.get('label').contains('Nome completo *').parent().find('input').type(nomeCompleto);
-        //     cy.get('label').contains('E-mail *').parent().find('input').type(emailAleatorio);
-        //     cy.get('label').contains('Celular *').parent().find('input').type(telefoneAleatorio);
-        //     cy.get('label').contains('CPF *').parent().find('input').type(cpfAleatorio);
-        //     cy.get('label').contains('Data de Nascimento *').parent().find('input').type(dataNascimentoMaior);
-        // }
+    cy.window().then((win) => {
+        let i = 0;
 
-        cy.get('.form-check-input').eq(1).check({force:true})
-        cy.get('button').contains('Avançar').click();
+        while (i < 10) {
+            // Remove a classe 'fields-hidden'
+            Array.from(win.document.getElementsByClassName('fields-hidden')).forEach((e) => {
+                e.classList.remove('fields-hidden');
+            });
 
+            // Remove a classe 'ps-input-hidden'
+            Array.from(win.document.getElementsByClassName('ps-input-hidden')).forEach((e) => {
+                e.classList.remove('ps-input-hidden');
+            });
+
+            i++;
+        }
+
+        // Log a mensagem no console após o loop
+        win.console.log('Classes removidas de todos os elementos ocultos.');
     });
-    it('Segundo passo da inscrição', () => {
 
-    });
+    cy.get('.form-check-input').eq(1).check({ force: true })
+    cy.get('button').contains('Avançar').click();
+
+});
+    // it('Segundo passo da inscrição', () => {
+
+    // });
 });
