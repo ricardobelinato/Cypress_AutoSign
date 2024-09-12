@@ -1,21 +1,77 @@
-export { gerarNome, gerarNome2, gerarEmail, gerarCep, gerarRG, gerarCnpj, cpf, numTel, dataNascimento};
+export { gerarNomeESobrenome, gerarNomeCompleto, gerarEmail, gerarCelular, gerarCPF, gerarDataNascimentoMaior, gerarDataNascimentoMenor, gerarCep, gerarRG, gerarCNPJ};
 
-//Aleatoriza nome e sobrenome
-function gerarNome() {
+function gerarNomeESobrenome() {
     const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
     const sobrenomeAleatorio = sobrenomes[Math.floor(Math.random() * sobrenomes.length)];
     return {nomeAleatorio, sobrenomeAleatorio};
 }
 
-//Gera o nome
-function gerarNome2(nomeAleatorio, sobrenomeAleatorio) {
+function gerarNomeCompleto(nomeAleatorio, sobrenomeAleatorio) {
     return nomeAleatorio + ' ' + sobrenomeAleatorio + ' ' + 'Teste Rubeus';
 }
 
-//Gera o email
 function gerarEmail(nomeAleatorio, sobrenomeAleatorio) {
     const emailAleatorio = nomeAleatorio.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toLowerCase() + sobrenomeAleatorio.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toLowerCase() + 'testerubeus@rubeusteste.com.br';
     return emailAleatorio;
+}
+
+function gerarCelular() {
+    const prefixo = Math.floor(Math.random() * 9000) + 1000;
+    const sufixo = Math.floor(Math.random() * 9000) + 1000;
+    return `329${prefixo}${sufixo}`;
+}
+
+let create_array = (total, numero) => Array.from(Array(total), () => number_random(numero));
+let number_random = (number) => Math.round(Math.random() * number);
+let mod = (dividendo, divisor) => Math.round(dividendo - Math.floor(dividendo / divisor) * divisor);
+function gerarCPF() {
+    let total_array = 9;
+    let n = 9;
+    let [n1, n2, n3, n4, n5, n6, n7, n8, n9] = create_array(total_array, n);
+
+    let d1 = n9 * 2 + n8 * 3 + n7 * 4 + n6 * 5 + n5 * 6 + n4 * 7 + n3 * 8 + n2 * 9 + n1 * 10;
+    d1 = 11 - (mod(d1, 11));
+    if (d1 >= 10) d1 = 0;
+
+    let d2 = d1 * 2 + n9 * 3 + n8 * 4 + n7 * 5 + n6 * 6 + n5 * 7 + n4 * 8 + n3 * 9 + n2 * 10 + n1 * 11;
+    d2 = 11 - (mod(d2, 11));
+    if (d2 >= 10) d2 = 0;
+    return n1 + '' + n2 + '' + n3 + '' + n4 + '' + n5 + '' + n6 + '' + n7 + '' + n8 + '' + n9 + '' + d1 + '' + d2;
+}
+
+function gerarDataNascimentoMaior() {
+    const anoAtual = new Date().getFullYear();
+    const idadeMinima = 18;
+    const idadeMaxima = 50;
+    const idadeAleatoria = Math.floor(Math.random() * (idadeMaxima - idadeMinima + 1)) + idadeMinima;
+    const anoNascimento = anoAtual - idadeAleatoria;
+    const dataNascimento = new Date(anoNascimento, Math.floor(Math.random() * 12), Math.floor(Math.random() * 31) + 1);
+    return dataNascimento.toLocaleDateString();
+}
+
+function gerarDataNascimentoMenor() {
+    const anoAtual = new Date().getFullYear();
+    const idadeMinima = 1;
+    const idadeMaxima = 17;
+    const idadeAleatoria = Math.floor(Math.random() * (idadeMaxima - idadeMinima + 1)) + idadeMinima;
+    const anoNascimento = anoAtual - idadeAleatoria;
+    const dataNascimento = new Date(anoNascimento, Math.floor(Math.random() * 12), Math.floor(Math.random() * 31) + 1);
+    return dataNascimento.toLocaleDateString();
+}
+
+function gerarCep(){
+    const cepAleatorio = ceps[Math.floor(Math.random() * ceps.length)];
+    return cepAleatorio;
+}
+
+function gerarRG(){
+    const RGAleatorio = rg[Math.floor(Math.random() * rg.lenght)];
+    return RGAleatorio;
+}
+
+function gerarCNPJ(){
+    const CnpjAleatorio = cnpj[Math.floor(Math.random() * cnpj.length)];
+    return CnpjAleatorio;
 }
 
 const nomes = [
@@ -70,56 +126,10 @@ const sobrenomes = [
     "Maman"
 ]
 
-//Gerar cep
-function gerarCep(){
-    const cepAleatorio = ceps[Math.floor(Math.random() * ceps.length)];
-    return cepAleatorio
-}
-
-const ceps = ['40415265', '69317176', '93280320', '69067801', '49009079', '77825050', '49032280', '78065752', '60811296', '68627502', '58429160', '29161828', '72620316', '71610075', '45077056', '59625187', '64003083', '39803160', '25908822', '99711210']
-
-//Gerar RG
-function gerarRG(){
-    const RGAleatorio = rg[Math.floor(Math.random() * rg.lenght)];
-}
+const ceps = ['40415265', '69317176', '93280320', '69067801', '49009079', '77825050', '49032280', '78065752',
+    '60811296', '68627502', '58429160', '29161828', '72620316', '71610075', '45077056', '59625187', '64003083',
+    '39803160', '25908822', '99711210']
 
 const rg = ['17.319.565-9', '44.149.591-6', '15.435.024-2', '40.362.489-7', '35.663.382-2']
 
-//Gerar CNPJ
-function gerarCnpj(){
-    const CnpjAleatorio = cnpj[Math.floor(Math.random() * cnpj.length)];
-}
-
 const cnpj = ['49.916.093/0001-98', '02.268.939/0001-67', '26.525.339/0001-03', '07.384.022/0001-41', '96.207.810/0001-92']
-
-//Gerar cpf
-let create_array = (total, numero) => Array.from(Array(total), () => number_random(numero));
-let number_random = (number) => Math.round(Math.random() * number);
-let mod = (dividendo, divisor) => Math.round(dividendo - Math.floor(dividendo / divisor) * divisor);
-function cpf() {
-    let total_array = 9;
-    let n = 9;
-    let [n1, n2, n3, n4, n5, n6, n7, n8, n9] = create_array(total_array, n);
-
-    let d1 = n9 * 2 + n8 * 3 + n7 * 4 + n6 * 5 + n5 * 6 + n4 * 7 + n3 * 8 + n2 * 9 + n1 * 10;
-    d1 = 11 - (mod(d1, 11));
-    if (d1 >= 10) d1 = 0;
-
-    let d2 = d1 * 2 + n9 * 3 + n8 * 4 + n7 * 5 + n6 * 6 + n5 * 7 + n4 * 8 + n3 * 9 + n2 * 10 + n1 * 11;
-    d2 = 11 - (mod(d2, 11));
-    if (d2 >= 10) d2 = 0;
-    return n1 + '' + n2 + '' + n3 + '' + n4 + '' + n5 + '' + n6 + '' + n7 + '' + n8 + '' + n9 + '' + d1 + '' + d2;
-}
-
-function numeroAleatorio(length) {
-    let numbers = create_array(length, 9)
-    return numbers.toString().split(',').join('');
-}
-
-function numTel(){
-    return '32999999999';
-}
-
-function dataNascimento(){
-    return '01012006'
-}

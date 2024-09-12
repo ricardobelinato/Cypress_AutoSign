@@ -1,4 +1,4 @@
-const { CONFIG } = require('../../e2e/ExampleSpec.cy');
+const { CONFIG } = require('../../e2e/Teste.cy');
 
 describe('Escolha de PS', module.exports = () => {
   it('passes', () => {
